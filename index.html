@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Derm AI - Revolutionizing skin condition diagnosis with AI technology.">
+    <meta name="author" content="Mariam Mohamed, Nirvana Simon">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Derm AI</title>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+</head>
+<body dir="ltr">
+    <header>
+        <div class="logo">
+            <img src="F:\vs\dermai2\image.png" alt="Derm AI Logo">
+        </div>
+        <h1 class="title" data-i18n="Derm AI">Derm AI</h1>
+        <div class="search-bar-container">
+            <input type="text" id="search-bar" data-i18n="Search for a disease..." placeholder="Search for a disease...">
+            <ul id="suggestions" class="suggestions-list"></ul>
+        </div>
+
+        <nav>
+            <a href="#about" data-i18n="About">About</a>
+            <a href="#faq-section" data-i18n="FAQ">FAQ</a>
+            <a href="#contact" data-i18n="Contact">Contact</a>
+            <a href="#" id="signInLink" data-i18n="Sign In">Sign In</a>
+            <img id="profilePic" src="" alt="Profile Picture" style="display: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;">
+            <a href="#" id="logoutLink" style="display: none;" data-i18n="Logout">Logout</a>
+
+        </nav>
+        <div class="language-button-container">
+            <select id="language-select">
+              <option value="en">English</option>
+              <option value="ar">عربي</option>
+              <option value="fr">Français</option>
+              <option value="de">Deutsch</option>
+            </select>
+        </div>
+    </header>
+    <div class="scrolling-circles"></div>
+
+    <!-- Floating Location Button -->
+    <div id="locationButton" class="location-icon">
+        🗺️
+    </div>
+
+    <!-- Modal for location -->
+    <div id="locationModal" class="modal" style="display: none;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px;">
+            <div id="map" style="width: 100%; height: 400px;"></div>
+            <button id="closeLocationModal" data-i18n="Close">Close</button>
+        </div>
+    </div>
+
+        <!-- Sign In Modal -->
+    <div id="signInModal" class="modal" style="display: none;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px;">
+            <h2 id="modalTitle" data-i18n="Register">Register</h2>
+
+            <!-- Register Section (Initially Visible) -->
+            <div id="register-section">
+                <form id="registerForm">
+                    <label for="registerEmail" data-i18n="Email">Email</label>
+                    <input type="email" id="registerEmail" required>
+                    <label for="registerPassword" data-i18n="Password">Password</label>
+                    <input type="password" id="registerPassword" required>
+                    <button type="submit" data-i18n="Register">Register</button>
+                </form>
+                <p id="login-prompt">
+                    <a href="#" id="loginLink" data-i18n="Already have an account? Log in">
+                        Already have an account? Log in
+                    </a>
+                </p>
+            </div>
+
+            <!-- Login Section (Initially Hidden) -->
+            <div id="login-section" style="display: none;">
+                <h3>Login</h3>
+                <form id="loginForm">
+                    <label for="loginEmail" data-i18n="Email">Email</label>
+                    <input type="email" id="loginEmail" required>
+                    <label for="loginPassword" data-i18n="Password">Password</label>
+                    <input type="password" id="loginPassword" required>
+                    <button type="submit" data-i18n="Login">Login</button>
+                </form>
+                 <p id="register-prompt">
+                    <a href="#" id="registerLink" data-i18n="Need an account? Register">
+                        Need an account? Register
+                    </a>
+                </p>
+            </div>
+
+            <!-- Google Sign-In Button -->
+            <button id="googleSignInBtn" data-i18n="Sign in with Google">Sign in with Google</button>
+
+            <button id="closeSignInModal" data-i18n="Close" style="margin-top: 10px;">Close</button>
+
+            <p id="user-status">Not logged in</p>
+        </div>
+    </div>
+
+    <!-- Main Sections -->
+    <main>
+        <section class="upload-section">
+            <h2 data-i18n="Upload Your Skin Photo">Upload Your Skin Photo</h2>
+            <p data-i18n="Please upload a clear image of the affected skin area. Ensure the photo is well-lit and focused for better analysis.">
+                Please upload a clear image of the affected skin area. Ensure the photo is well-lit and focused for better analysis.
+            </p>
+            <!-- User Information Form -->
+            <form id="userInfoForm">
+                <label for="age" data-i18n="Your Age">Your Age</label>
+                <input type="number" id="age" required>
+
+                <label for="gender" data-i18n="Your Gender">Your Gender</label>
+                <select id="gender" required>
+                    <option value="male" data-i18n="Male">Male</option>
+                    <option value="female" data-i18n="Female">Female</option>
+                </select>
+                <label for="skinType" data-i18n="Your Skin Type">Your Skin Type</label>
+                <select id="skinType" required>
+                    <option value="dry" data-i18n="Dry">Dry</option>
+                    <option value="oily" data-i18n="Oily">Oily</option>
+                    <option value="combination" data-i18n="Combination">Combination</option>
+                </select>
+            </form>
+            <label for="skin-photo" class="upload-button" data-i18n="Choose Photo">
+                Choose Photo
+            </label>
+            <input id="skin-photo" class="upload-input" type="file" accept="image/*" onchange="previewPhoto(event)">
+            <div class="upload-preview" id="upload-preview">
+                <!-- Preview image will appear here -->
+            </div>
+            <span id="diagnosis-result"></span>
+        </section>
+
+         <!-- About Section -->
+        <section id="about" class="section">
+            <h1 data-i18n="About Derm AI">About Derm AI</h1>
+            <p>
+                <span data-i18n="about1">Skin diseases are among the most prevalent health concerns worldwide, affecting millions of people across all age groups.</span>
+                <span data-i18n="about2">At Derm AI, we are committed to leveraging the power of technology to address these challenges.</span>
+                <span data-i18n="about3">By integrating deep learning and advanced AI algorithms, we aim to revolutionize how skin conditions are detected and managed.</span>
+                <span data-i18n="about4">Our AI models analyze high-quality photos of skin to identify a wide range of conditions, from common issues like acne and eczema to more complex skin concerns.</span>
+                <span data-i18n="about5">With the ability to provide rapid, accurate, and accessible diagnostics, our platform serves as a valuable tool for individuals seeking insights into their skin health.</span>
+                <span data-i18n="about6">This approach is particularly beneficial for those in underserved or remote areas, where access to dermatological care is limited.</span>
+            </p>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq-section" class="faq">
+            <h1 data-i18n="Frequently Asked Questions">Frequently Asked Questions</h1>
+            <div class="faq">
+                <h3 data-i18n="How does Derm AI work?">How does Derm AI work?</h3>
+                <p data-i18n="Derm AI is an innovative platform designed to diagnose skin diseases quickly and accurately. Users simply upload a clear photo of the affected area, and our advanced algorithms analyze the image against a vast database of skin conditions. This process allows us to provide a preliminary diagnosis in a matter of seconds. Our technology is built on a lot of research and expertise in dermatology, ensuring that you receive reliable insights. With Derm AI, your journey to healthier skin starts with just a click.</p>
+                <h3 data-i18n="Is my data safe with Derm AI?">Is my data safe with Derm AI?</h3>
+                <p data-i18n="At Derm AI, your privacy and security are our top priorities. We employ state-of-the-art encryption and data protection measures to safeguard your personal information and uploaded images. Your data is stored securely and is only used for diagnostic purposes. We adhere to strict privacy regulations and do not share your information with third parties without your consent. Rest assured, when you use Derm AI, your sensitive information remains confidential while you receive the best possible skin care advice.">At Derm AI, your privacy and security are our top priorities. We employ state-of-the-art encryption and data protection measures to safeguard your personal information and uploaded images. Your data is stored securely and is only used for diagnostic purposes. We adhere to strict privacy regulations and do not share your information with third parties without your consent. Rest assured, when you use Derm AI, your sensitive information remains confidential while you receive the best possible skin care advice.</p>
+                <h3 data-i18n="Can Derm AI replace a dermatologist?">Can Derm AI replace a dermatologist?</h3>
+                <p data-i18n="While Derm AI offers a convenient and quick way to assess skin conditions, it is not a substitute for professional medical advice. Our platform provides preliminary insights based on image analysis, which can be a useful starting point for understanding your skin health. However, for a comprehensive diagnosis and treatment plan, we always recommend consulting a licensed dermatologist. Derm AI empowers you with information, but your health deserves the expertise of a qualified professional.">While Derm AI offers a convenient and quick way to assess skin conditions, it is not a substitute for professional medical advice. Our platform provides preliminary insights based on image analysis, which can be a useful starting point for understanding your skin health. However, for a comprehensive diagnosis and treatment plan, we always recommend consulting a licensed dermatologist. Derm AI empowers you with information, but your health deserves the expertise of a qualified professional.</p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h1 data-i18n="Contact Us">Contact Us</h1>
+            <form id="feedbackForm">
+                <label for="name" data-i18n="Your Name">Your Name</label>
+                <input type="text" id="name" required>
+                <label for="email" data-i18n="Your Email">Your Email</label>
+                <input type="email" id="email" required>
+                <label for="message" data-i18n="Your Feedback">Your Feedback</label>
+                <textarea id="message" rows="4" required></textarea>
+                <button type="submit" data-i18n="Submit">Submit</button>
+            </form>
+        </section>
+
+    <footer>
+        <p data-i18n="© 2024 Derm AI | All rights reserved">© 2024 Derm AI | All rights reserved</p>
+        <p>mariam mohamed || maryam.1123593@stemmaadi.moe.edu.eg</p>
+        <p>nirvana simon || nirvana.1123609@stemmaadi.moe.edu.eg</p>
+    </footer>
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <script src="script.js"></script>
+</body>
+</html>

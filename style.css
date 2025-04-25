@@ -1,0 +1,714 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
+/* General Styling */
+body {
+    font-family: 'Roboto Slab', serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F9F9F9;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+header {
+    background-color: #8A4D3B;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo img {
+    max-width: 70px;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-left: 10px;
+    color: #fff;
+}
+
+.search-bar-container {
+    position: relative;
+    margin: 0 20px;
+    flex: 1;
+}
+
+#search-bar {
+    width: 90%;
+    padding: 1rem 0.5rem;
+    margin-left: 4rem;
+    border-radius: 25px;
+    border: none;
+    font-size: 1rem;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.suggestions-list {
+    position: absolute;
+    top: 60px;
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    display: none; /* This is essential */
+    list-style: none;
+    margin: 0;
+    padding: 15px;
+}
+
+.suggestions-list.show {
+    display: block;
+}
+
+.suggestions-list li {
+    padding: 12px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.suggestions-list li:hover {
+    background: #eee;
+}
+
+nav {
+    display: flex; /* Add this line */
+    align-items: center; /* Vertically align items in the nav */
+}
+
+nav a {
+    color: white;
+    margin: 0 20px;
+    font-size: 1.1rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #72482a;
+}
+
+#profilePic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 10px; /* Adjust spacing as needed */
+}
+/* Section Styling */
+.section {
+    padding: 60px 30px;
+    text-align: center;
+    background-color: #FFF;
+    margin: 30px auto;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #8A4D3B;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 2rem;
+    color: #8A4D3B;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+p {
+    color: #555;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+button {
+    background-color: #8A4D3B;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background 0.3s;
+    font-family: 'Roboto Slab', serif;
+}
+
+button:hover {
+    background-color: #6F4D37;
+}
+
+.scrolling-circles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.scrolling-circles::before,
+.scrolling-circles::after {
+    content: '';
+    position: absolute;
+    background: rgba(245, 217, 199, 0.3);
+    border-radius: 50%;
+    width: 400px;
+    height: 400px;
+    animation: moveCircles 20s infinite;
+}
+
+.scrolling-circles::after {
+    width: 500px;
+    height: 500px;
+    left: 70%;
+    animation-delay: 8s;
+}
+
+@keyframes moveCircles {
+    0% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(-50px, 50px);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+/* Skin Photo Upload Section */
+.upload-section {
+    background-color: #FFF;
+    padding: 40px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 40px auto;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.upload-section:hover {
+    transform: translateY(-5px);
+}
+
+.upload-section h2 {
+    font-size: 2rem;
+    color: #8A4D3B;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.upload-section p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.upload-button {
+    display: inline-block;
+    background-color: #8A4D3B;
+    color: #FFF;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.upload-button:hover {
+    background-color: #734030;
+    transform: scale(1.05);
+}
+
+.upload-input {
+    display: none;
+}
+
+.upload-preview {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.upload-preview img {
+    max-width: 200px; /* Reduced maximum width */
+    height: auto;
+    max-height: 200px; /* Reduced maximum height */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.upload-preview span {
+    color: #8A4D3B;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+#diagnosis-result {
+    display: block;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: #555;
+    text-align: center;
+}
+/* FAQ Section */
+.faq h3 {
+    font-size: 1.5rem;
+    color: #6d3a2a;
+    margin-top: 20px;
+}
+
+.faq p {
+    font-size: 1.1rem;
+    margin: 10px 0px;
+}
+
+/* Contact Form */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    background: #F5F5F5;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+form input, form textarea {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+footer {
+    background-color: #8A4D3B;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 1rem;
+}
+
+footer a,
+footer p,
+footer span {
+    color: white !important;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    color: #FFA600;
+    text-decoration: underline;
+}
+/* Location Button */
+.location-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    background-color: #8A4D3B;
+    color: white;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.location-icon:hover {
+    transform: scale(1.1);
+}
+
+/* FAQ Section */
+.faq h1 {
+    margin-left: 0.5em;
+}
+
+.faq h3 {
+    font-size: 2rem;
+    color: #8A4D3B;
+    margin-top: 1em;
+    margin-left: 1em;
+}
+
+.faq p {
+    margin: 0.5em 0 1em;
+    margin-left: 2em;
+    margin-right: 1em;
+    color: #555;
+}
+
+/* About Section */
+.about {
+    font-size: rem;
+    color: #555;
+    line-height: 1.6;
+    margin: 0.5em 0 1em;
+}
+
+#disease-list {
+    margin-top: 20px;
+}
+
+.disease-item {
+    background-color: #f5f5f5;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+/* Diseases Section */
+#searchBar {
+    display: block;
+    margin: 1em auto;
+    padding: 0.5em;
+    font-size: 1rem;
+    max-width: 400px;
+    border: 1px solid #CCC;
+    border-radius: 8px;
+}
+
+#disease-list .disease {
+    margin: 1em 0;
+    padding: 1em;
+    border: 1px solid #DDD;
+    border-radius: 8px;
+    background-color: #FAFAFA;
+}
+
+#disease-list h3 {
+    margin: 0 0 0.5em;
+    font-size: 1.2rem;
+    color: #8A4D3B;
+}
+
+#disease-list p {
+    margin: 0;
+    color: #555;
+}
+
+/* Contact Section */
+form {
+    max-width: 400px;
+    margin: 2em auto;
+    background: #F9F9F9;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    margin: 0.5em 0 0.2em;
+    font-weight: bold;
+}
+
+form input,
+form textarea,
+form button {
+    width: 100%;
+    margin-bottom: 1em;
+    padding: 0.5em;
+    font-size: 1rem;
+    border: 1px solid #210b02;
+    border-radius: 8px;
+}
+
+form button {
+    background-color: #8A4D3B;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #734030;
+}
+
+/* Fix for smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Ensure the footer does not overlap content */
+footer {
+    padding-top: 1rem;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFF;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    z-index: 1000;
+    width: 90%; /* Adjust width for responsiveness */
+    max-width: 600px; /* Maximum width */
+    max-height: 80vh; /* Maximum height to prevent overflow */
+    overflow-y: auto; /* Enable scrolling if content overflows */
+}
+
+/* Sign In Modal Styles */
+#signInModal div {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+@media screen and (max-width: 600px) {
+    .modal {
+        width: 95%;
+        max-width: none; /* Remove maximum width */
+    }
+}
+/* Sign In Modal Styles */
+#signInModal {
+    display: none;
+    position: fixed;
+    top: 50;
+    left: 50;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1002; /* Increased z-index */
+    align-items: center;
+    justify-content: center;
+    margin-right: 5rem;
+}
+
+#signInModal div {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position:center;
+}
+
+#signInModal h2 {
+    text-align: center;
+    color: #8A4D3B;
+}
+
+#signInModal form {
+    display: flex;
+    flex-direction: column;
+}
+
+#signInModal form label {
+    margin-top: 10px;
+    color: #333;
+    font-weight: bold;
+    display: block;
+}
+
+#signInModal form input[type="text"],
+#signInModal form input[type="email"],
+#signInModal form input[type="password"]
+{
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+#signInModal form button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #8A4D3B;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+#signInModal form button:hover {
+    background-color: #6F4D37;
+}
+ /* Language Button Styles */
+.language-button-container {
+    margin-left: 20px;
+}
+
+/* Style the select dropdown */
+#language-select {
+    appearance: none;  /* Remove default arrow */
+    -webkit-appearance: none; /* For older browsers */
+    background-color: #8A4D3B;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background 0.3s;
+    font-family: 'Roboto Slab', serif;
+    padding-right: 25px; /* Add space for the custom arrow */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: center;
+}
+
+/* Hover effect for the select dropdown */
+#language-select:hover {
+  background-color: #6F4D37;
+}
+
+/* Focus effect for accessibility */
+#language-select:focus {
+    outline: none;
+    border-color: #6F4D37; /* or any other focus indication */
+    box-shadow: 0 0 5px rgba(111, 77, 55, 0.5);
+}
+
+
+/* Arabic Text Styling */
+html[lang="ar"] body {
+    font-family: 'Noto Naskh Arabic', sans-serif;
+    direction: rtl;
+    text-align: right;
+}
+
+html[lang="ar"]  header {
+  flex-direction: row-reverse;
+}
+
+html[lang="ar"] nav {
+  flex-direction: row-reverse;
+}
+
+
+html[lang="ar"] nav a {
+ margin-left: 0;
+ margin-right: 20px;
+}
+
+html[lang="ar"] .logo {
+ margin-right: 10px;
+ margin-left: 0;
+}
+
+html[lang="ar"]  .search-bar-container {
+ margin-left: 0px;
+ margin-right: 20px;
+}
+html[lang="ar"] .language-button-container{
+    margin-right: 20px;
+    margin-left: 0px;
+}
+
+html[lang="ar"] #search-bar {
+    text-align: right;
+}
+
+html[lang="ar"] .suggestions-list {
+    right: 0;
+    left: auto;
+}
+
+html[lang="ar"] .suggestions-list li {
+    text-align: right;
+}
+
+html[lang="ar"]  .upload-section h2,
+html[lang="ar"]  .upload-section p {
+  text-align: center;
+}
+
+html[lang="ar"] form label {
+  text-align: center;
+}
+
+html[lang="ar"] #disease-list .disease {
+  text-align: right;
+}
+
+html[lang="ar"] #disease-list p {
+  text-align: right;
+}
+
+html[lang="ar"] form {
+  text-align: center;
+}
+
+html[lang="ar"] form input,
+html[lang="ar"] form textarea,
+html[lang="ar"] form button {
+  text-align: center;
+}
+
+html[lang="ar"]  #signInModal form label {
+  text-align: right;
+}
+
+html[lang="ar"] #signInModal form input {
+    text-align: right;
+}
+html[lang="ar"] .modal {
+  text-align: right;
+}
+
+html[lang="ar"] .faq {
+  text-align: right;
+}
+
+html[lang="ar"] .faq h3 {
+    text-align: right;
+    margin-right: 1em;
+    margin-left: 0;
+}
+html[lang="ar"] .faq p {
+  margin-right: 2em;
+   margin-left: 1em;
+}
+
+html[lang="ar"] .about {
+  text-align: right;
+}
+
+html[lang="ar"] footer {
+   text-align: center;
+}
